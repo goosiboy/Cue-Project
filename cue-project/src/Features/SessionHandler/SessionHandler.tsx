@@ -1,6 +1,5 @@
 import Utils from "../Utils/Utils";
 import Cookies from "js-cookie";
-import { exception } from "console";
 
 /**
  * Contains helper methods for handling cookies, sessionStorage and localStorage
