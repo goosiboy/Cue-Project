@@ -1,0 +1,12 @@
+/* CSS-Grid */
+.Header {
+    grid-area: Header;
+    grid-column-start: 1;
+    grid-column-end: 4;
+} 
+
+.Header {
+    background-color: rgb(170, 221, 255);
+    height: 100%;
+}
+

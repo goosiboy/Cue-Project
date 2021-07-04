@@ -1,0 +1,11 @@
+/* CSS-Grid */
+.Main {
+    grid-area: Main;
+    grid-column-start: auto;
+    grid-column-end: auto;
+} 
+
+.Main {
+    background-color: rgb(208, 255, 204);
+    height: 100%;
+}
