@@ -1,10 +1,14 @@
 import { Component } from "react";
 import SessionHandler from "../SessionHandler/SessionHandler";
+import ZIndexManager from "../Utils/ZIndexManager";
 
 class ChatBox extends Component {
 
+    private indexManager = new ZIndexManager();
+
     style = {
-        "border": "1px solid black"
+        border: "1px solid black",
+        zIndex: this.indexManager.findLayerWithKey("BASE")
     }
 
     storeCurrentStyle() {
@@ -12,8 +16,7 @@ class ChatBox extends Component {
     }
 
     fetchStyle() {
-        let value = SessionHandler.getFromLocalStorage("styles");
-        console.log("value : " + JSON.stringify(value));
+        SessionHandler.getFromLocalStorage("styles");
     }
 
     render() {
