@@ -1,15 +1,13 @@
 import { Component } from "react";
 import './SidebarRight.css';
-import ChatBox from "../../Features/ChatBox/ChatBox";
-import ZIndexManager from "../../Features/Utils/ZIndexManager";
+import ChatBox from "@features/ChatBox/ChatBox";
+import zIndexManager from "@utils/ZindexManager";
 
 class SidebarRight extends Component {
 
-    private indexManager = new ZIndexManager();
-
     style = {
         border: "1px solid black",
-        zIndex: this.indexManager.findLayerWithKey("BASE")
+        zIndex: zIndexManager.getLayer("LAYER_0")
     }
 
     render() {

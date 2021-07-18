@@ -1,14 +1,12 @@
 import { Component } from "react";
 import './SidebarLeft.css';
-import ZIndexManager from "../../Features/Utils/ZIndexManager";
+import zIndexManager from "@utils/ZindexManager";
 
 class SidebarLeft extends Component {
 
-    private indexManager = new ZIndexManager();
-
     style = {
         border: "1px solid black",
-        zIndex: this.indexManager.findLayerWithKey("INTERACTIVE")
+        zIndex: zIndexManager.getLayer("LAYER_0")
     }
 
     render() {

@@ -1,16 +1,19 @@
 import { Component } from "react";
 import './Header.css';
-import ZIndexManager from "../../Features/Utils/ZIndexManager";
+import zIndexManager from "@utils/ZindexManager";
 
 class Header extends Component {
 
-    private indexManager = new ZIndexManager();
+    style = {
+        border: "1px solid black",
+        zIndex: zIndexManager.getLayer("LAYER_0")
+    }
 
     render() {
         return (
             <div className="Header">
                 Header
-                {this.indexManager.currentlyActiveLayers()}
+                {zIndexManager.printLayers()}
             </div>
         );
     }

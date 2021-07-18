@@ -1,14 +1,12 @@
 import { Component } from "react";
-import SessionHandler from "../SessionHandler/SessionHandler";
-import ZIndexManager from "../Utils/ZIndexManager";
+import SessionHandler from "@features/SessionHandler/SessionHandler";
+import zIndexManager from "@utils/ZindexManager";
 
 class ChatBox extends Component {
 
-    private indexManager = new ZIndexManager();
-
     style = {
         border: "1px solid black",
-        zIndex: this.indexManager.findLayerWithKey("BASE")
+        zIndex: zIndexManager.getLayer("LAYER_0")
     }
 
     storeCurrentStyle() {
