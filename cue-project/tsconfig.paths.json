@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@utils/*": ["Features/Utils/*"],
+      "@features/*": ["Features/*"],
+      "@components/*": ["Components/*"]      
+    }
+  }
+}
