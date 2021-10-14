@@ -1,5 +1,5 @@
 import { Component } from "react";
-import SessionHandler from "@features/SessionHandler/SessionHandler";
+import SessionHandler from "@features/sessionHandler/SessionHandler";
 import zIndexManager from "@utils/ZindexManager";
 
 class ChatBox extends Component {

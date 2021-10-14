@@ -1,6 +1,6 @@
 import { Component } from "react";
 import './SidebarRight.css';
-import ChatBox from "@features/ChatBox/ChatBox";
+import ChatBox from "@features/chatBox/ChatBox";
 import zIndexManager from "@utils/ZindexManager";
 
 class SidebarRight extends Component {

@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import Header from "@components/Header/Header";
-import Footer from "@components/Footer/Footer";
-import Main from "@components/Main/Main";
-import SidebarLeft from "@components/Sidebar/SidebarLeft";
-import SidebarRight from "@components/Sidebar/SidebarRight";
+import Header from "@components/header/Header";
+import Footer from "@components/footer/Footer";
+import Main from "@components/main/Main";
+import SidebarLeft from "@components/sidebar/SidebarLeft";
+import SidebarRight from "@components/sidebar/SidebarRight";
 
 export default class App extends React.Component {
 
