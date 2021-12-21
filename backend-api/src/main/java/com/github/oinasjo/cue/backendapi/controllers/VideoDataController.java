@@ -28,6 +28,12 @@ import com.github.oinasjo.cue.backendapi.entities.VideoData;
 import com.github.oinasjo.cue.backendapi.exceptions.VideoDataNotFoundException;
 import com.github.oinasjo.cue.backendapi.repository.VideoDataRepository;
 
+/**
+ * Controller for fetching video data from the database
+ * 
+ * @author jonyoinas
+ *
+ */
 @RestController
 public class VideoDataController {
 
