@@ -9,6 +9,10 @@ import java.util.stream.Collectors;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.mediatype.problem.Problem;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.oinasjo.cue.backendapi.VideoLifeCycle;
 import com.github.oinasjo.cue.backendapi.assembler.VideoDataModelAssembler;
 import com.github.oinasjo.cue.backendapi.entities.VideoData;
 import com.github.oinasjo.cue.backendapi.exceptions.VideoDataNotFoundException;
@@ -83,6 +88,44 @@ public class VideoDataController {
 	public ResponseEntity<Object> deleteVideoData(@PathVariable Long id) {
 		repository.deleteById(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@DeleteMapping("/videos/{id}/cancel")
+	public ResponseEntity<?> cancel(@PathVariable Long id) {
+
+		VideoData videoData = repository.findById(id) //
+				.orElseThrow(() -> new VideoDataNotFoundException(id));
+
+		if (videoData.getStatus() == VideoLifeCycle.WAITING) {
+			videoData.setStatus(VideoLifeCycle.CANCELLED);
+			return ResponseEntity.ok(assembler.toModel(repository.save(videoData)));
+		}
+
+		return ResponseEntity //
+				.status(HttpStatus.METHOD_NOT_ALLOWED) //
+				.header(HttpHeaders.CONTENT_TYPE, MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE) //
+				.body(Problem.create() //
+						.withTitle("Method not allowed") //
+						.withDetail("You can't cancel a video that is in the " + videoData.getStatus() + " status"));
+	}
+
+	@PutMapping("/videos/{id}/complete")
+	public ResponseEntity<?> complete(@PathVariable Long id) {
+
+		VideoData videoData = repository.findById(id) //
+				.orElseThrow(() -> new VideoDataNotFoundException(id));
+
+		if (videoData.getStatus() == VideoLifeCycle.PLAYING) {
+			videoData.setStatus(VideoLifeCycle.COMPLETED);
+			return ResponseEntity.ok(assembler.toModel(repository.save(videoData)));
+		}
+
+		return ResponseEntity //
+				.status(HttpStatus.METHOD_NOT_ALLOWED) //
+				.header(HttpHeaders.CONTENT_TYPE, MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE) //
+				.body(Problem.create() //
+						.withTitle("Method not allowed") //
+						.withDetail("You can't complete a video that is in the " + videoData.getStatus() + " status"));
 	}
 
 }

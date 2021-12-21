@@ -7,6 +7,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
+import com.github.oinasjo.cue.backendapi.VideoLifeCycle;
 import com.github.oinasjo.cue.backendapi.controllers.VideoDataController;
 import com.github.oinasjo.cue.backendapi.entities.VideoData;
 
@@ -24,8 +25,16 @@ public class VideoDataModelAssembler implements RepresentationModelAssembler<Vid
 	 */
 	@Override
 	public EntityModel<VideoData> toModel(VideoData videoData) {
-		return EntityModel.of(videoData, //
+		EntityModel<VideoData> videoModel = EntityModel.of(videoData, //
 				linkTo(methodOn(VideoDataController.class).one(videoData.getId())).withSelfRel(),
 				linkTo(methodOn(VideoDataController.class).all()).withRel("videos"));
+
+		if (videoData.getStatus().equals(VideoLifeCycle.PLAYING)) {
+			videoModel.add(linkTo(methodOn(VideoDataController.class).cancel(videoData.getId())).withRel("cancel"));
+			videoModel.add(linkTo(methodOn(VideoDataController.class).complete(videoData.getId())).withRel("complete"));
+		}
+
+		return videoModel;
+
 	}
 }

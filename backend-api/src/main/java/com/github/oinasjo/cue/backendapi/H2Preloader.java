@@ -24,8 +24,8 @@ public class H2Preloader {
 	public CommandLineRunner initDatabase(VideoDataRepository repository) {
 
 		return args -> {
-			log.info("Preloading {}",
-					repository.save(new VideoData("I'm Alive", "https://www.youtube.com/watch?v=tbAK2Rz_tzE")));
+			log.info("Preloading {}", repository.save(
+					new VideoData("I'm Alive", "https://www.youtube.com/watch?v=tbAK2Rz_tzE", VideoLifeCycle.WAITING)));
 		};
 	}
 
