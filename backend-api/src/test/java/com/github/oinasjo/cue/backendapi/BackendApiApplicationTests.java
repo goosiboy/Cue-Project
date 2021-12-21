@@ -1,10 +1,10 @@
-package com.github.oinasjo;
+package com.github.oinasjo.cue.backendapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CueBackendApplicationTests {
+class BackendApiApplicationTests {
 
 	@Test
 	void contextLoads() {
