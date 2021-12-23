@@ -1,7 +1,7 @@
 package com.github.oinasjo.cue.backendapi;
 
 /**
- * Video's current status in the life cycle
+ * Video's current life cycle status
  * 
  * @author jonyoinas
  *

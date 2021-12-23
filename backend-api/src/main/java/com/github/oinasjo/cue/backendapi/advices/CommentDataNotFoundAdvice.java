@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.github.oinasjo.cue.backendapi.exceptions.VideoDataNotFoundException;
+import com.github.oinasjo.cue.backendapi.exceptions.CommentDataNotFoundException;
 
 @ControllerAdvice
-public class VideoDataNotFoundAdvice {
+public class CommentDataNotFoundAdvice {
 
 	@ResponseBody
-	@ExceptionHandler(VideoDataNotFoundException.class)
+	@ExceptionHandler(CommentDataNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public String videoDataNotFoundHandler(VideoDataNotFoundException ex) {
+	public String commentDataNotFoundHandler(CommentDataNotFoundException ex) {
 		return ex.getMessage();
 	}
 

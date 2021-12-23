@@ -69,8 +69,9 @@ public class VideoDataController {
 			@PathVariable Long id) {
 
 		VideoData updatedVideoData = repository.findById(id).map(video -> {
-			video.setName(newVideoData.getName());
+			video.setVideoTitle(newVideoData.getVideoTitle());
 			video.setUrl(newVideoData.getUrl());
+			video.setDate(newVideoData.getDate());
 			return repository.save(video);
 		}).orElseGet(() -> {
 			newVideoData.setId(id);

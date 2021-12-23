@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.github.oinasjo.cue.backendapi.VideoLifeCycle;
 import com.github.oinasjo.cue.backendapi.controllers.VideoDataController;
 import com.github.oinasjo.cue.backendapi.entities.VideoData;
+import com.github.oinasjo.cue.backendapi.exceptions.AssemblerException;
 
 /**
  * Helper class for creating links as specified by the HATEOAS - specification
@@ -25,6 +26,16 @@ public class VideoDataModelAssembler implements RepresentationModelAssembler<Vid
 	 */
 	@Override
 	public EntityModel<VideoData> toModel(VideoData videoData) {
+
+		if (videoData == null) {
+			throw new AssemblerException("Object was empty");
+		}
+
+		return buildDataModel(videoData);
+
+	}
+
+	private EntityModel<VideoData> buildDataModel(VideoData videoData) {
 		EntityModel<VideoData> videoModel = EntityModel.of(videoData, //
 				linkTo(methodOn(VideoDataController.class).one(videoData.getId())).withSelfRel(),
 				linkTo(methodOn(VideoDataController.class).all()).withRel("videos"));
@@ -35,6 +46,6 @@ public class VideoDataModelAssembler implements RepresentationModelAssembler<Vid
 		}
 
 		return videoModel;
-
 	}
+
 }
