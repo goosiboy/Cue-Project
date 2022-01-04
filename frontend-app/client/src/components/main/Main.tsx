@@ -1,5 +1,6 @@
 import { Component } from "react";
 import './Main.css';
+import MediaQueue from "../../features/queue/MediaQueue";
 
 class Main extends Component {
 
@@ -7,6 +8,8 @@ class Main extends Component {
         return (
             <div className="Main">
                 Main
+                <br />
+                <MediaQueue />
             </div>
         );
     }

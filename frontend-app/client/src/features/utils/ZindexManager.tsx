@@ -104,7 +104,7 @@ class ZindexManager {
 
     public printLayers() {
         this.zIndexArray.forEach(element => {
-                console.log(element);
+            //console.log(element);
         });   
     }
 

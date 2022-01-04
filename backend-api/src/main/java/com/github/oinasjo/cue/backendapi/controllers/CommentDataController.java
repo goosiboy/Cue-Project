@@ -20,6 +20,7 @@ import com.github.oinasjo.cue.backendapi.assembler.CommentDataModelAssembler;
 import com.github.oinasjo.cue.backendapi.entities.CommentData;
 import com.github.oinasjo.cue.backendapi.exceptions.CommentDataNotFoundException;
 import com.github.oinasjo.cue.backendapi.repository.CommentDataRepository;
+import com.github.oinasjo.cue.backendapi.util.Consts;
 
 /**
  * Controller for fetching comment data from the database
@@ -38,7 +39,7 @@ public class CommentDataController {
 		this.assembler = assembler;
 	}
 
-	@PostMapping("/comments")
+	@PostMapping(Consts.COMMENTS_ROUTE_URL)
 	public ResponseEntity<EntityModel<CommentData>> newCommentData(@RequestBody CommentData commentData) {
 		EntityModel<CommentData> entityModel = assembler.toModel(repository.save(commentData));
 
@@ -47,7 +48,7 @@ public class CommentDataController {
 				.body(entityModel);
 	}
 
-	@GetMapping("/comments")
+	@GetMapping(Consts.COMMENTS_ROUTE_URL)
 	public CollectionModel<EntityModel<CommentData>> all() {
 
 		List<EntityModel<CommentData>> comments = repository.findAll().stream().map(assembler::toModel)
@@ -57,7 +58,7 @@ public class CommentDataController {
 
 	}
 
-	@GetMapping("/comments/{id}")
+	@GetMapping(Consts.COMMENTS_ROUTE_URL + "/{id}")
 	public EntityModel<CommentData> one(@PathVariable Long id) {
 		CommentData commentData = repository.findById(id).orElseThrow(() -> new CommentDataNotFoundException(id));
 

@@ -27,6 +27,7 @@ import com.github.oinasjo.cue.backendapi.assembler.VideoDataModelAssembler;
 import com.github.oinasjo.cue.backendapi.entities.VideoData;
 import com.github.oinasjo.cue.backendapi.exceptions.VideoDataNotFoundException;
 import com.github.oinasjo.cue.backendapi.repository.VideoDataRepository;
+import com.github.oinasjo.cue.backendapi.util.Consts;
 
 /**
  * Controller for fetching video data from the database
@@ -45,7 +46,7 @@ public class VideoDataController {
 		this.assembler = assembler;
 	}
 
-	@GetMapping("/videos")
+	@GetMapping(Consts.VIDEOS_ROUTE_URL)
 	public CollectionModel<EntityModel<VideoData>> all() {
 
 		List<EntityModel<VideoData>> videos = repository.findAll().stream().map(assembler::toModel)
@@ -55,7 +56,7 @@ public class VideoDataController {
 
 	}
 
-	@PostMapping("/videos")
+	@PostMapping(Consts.VIDEOS_ROUTE_URL)
 	public ResponseEntity<EntityModel<VideoData>> newVideoData(@RequestBody VideoData videoData) {
 		EntityModel<VideoData> entityModel = assembler.toModel(repository.save(videoData));
 
@@ -64,7 +65,7 @@ public class VideoDataController {
 				.body(entityModel);
 	}
 
-	@PutMapping("/videos/{id}")
+	@PutMapping(Consts.VIDEOS_ROUTE_URL + "/{id}")
 	public ResponseEntity<EntityModel<VideoData>> replaceVideo(@RequestBody VideoData newVideoData,
 			@PathVariable Long id) {
 
@@ -83,7 +84,7 @@ public class VideoDataController {
 		return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entityModel);
 	}
 
-	@GetMapping("/videos/{id}")
+	@GetMapping(Consts.VIDEOS_ROUTE_URL + "/{id}")
 	public EntityModel<VideoData> one(@PathVariable Long id) {
 		VideoData videoData = repository.findById(id).orElseThrow(() -> new VideoDataNotFoundException(id));
 
@@ -91,13 +92,13 @@ public class VideoDataController {
 
 	}
 
-	@DeleteMapping("/videos/{id}")
+	@DeleteMapping(Consts.VIDEOS_ROUTE_URL + "/{id}")
 	public ResponseEntity<Object> deleteVideoData(@PathVariable Long id) {
 		repository.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
 
-	@DeleteMapping("/videos/{id}/cancel")
+	@DeleteMapping(Consts.VIDEOS_ROUTE_URL + "/{id}/cancel")
 	public ResponseEntity<?> cancel(@PathVariable Long id) {
 
 		VideoData videoData = repository.findById(id) //
@@ -116,7 +117,7 @@ public class VideoDataController {
 						.withDetail("You can't cancel a video that is in the " + videoData.getStatus() + " status"));
 	}
 
-	@PutMapping("/videos/{id}/complete")
+	@PutMapping(Consts.VIDEOS_ROUTE_URL + "/{id}/complete")
 	public ResponseEntity<?> complete(@PathVariable Long id) {
 
 		VideoData videoData = repository.findById(id) //
