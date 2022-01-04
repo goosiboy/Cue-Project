@@ -1,0 +1,45 @@
+let http = require("http");
+
+/**
+ * Promise - wrapper for the http request API
+ *
+ * @returns Promise
+ */
+module.exports = function HttpRequest(params, postData) {
+  return new Promise(function (resolve, reject) {
+    let req = http.request(params, function (res) {
+      console.log("1");
+      // on bad status, reject
+      if (res.statusCode < 200 || res.statusCode >= 300) {
+        return reject(new Error("statusCode = " + res.statusCode));
+      }
+
+      console.log("2");
+
+      let body = [];
+      // on response data, cumulate it
+      res.on("data", function (chunk) {
+        body.push(chunk);
+      });
+
+      // on end, parse and resolve
+      res.on("end", function () {
+        try {
+          body = JSON.parse(Buffer.concat(body).toString());
+        } catch (e) {
+          reject(e);
+        }
+        console.log("3 : " + JSON.stringify(body));
+        resolve(body);
+      });
+    });
+    req.on("error", function (err) {
+      reject(err);
+    });
+    if (postData) {
+      req.write(postData);
+    }
+    console.log("4 : ended");
+    req.end();
+  });
+};
