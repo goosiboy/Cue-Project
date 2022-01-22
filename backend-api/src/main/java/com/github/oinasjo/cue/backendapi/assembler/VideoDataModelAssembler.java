@@ -22,7 +22,7 @@ import com.github.oinasjo.cue.backendapi.exceptions.AssemblerException;
 public class VideoDataModelAssembler implements RepresentationModelAssembler<VideoData, EntityModel<VideoData>> {
 
 	/**
-	 * Converts a non-model objects into a model-based objects
+	 * Converts a non-model objects into model-based objects
 	 */
 	@Override
 	public EntityModel<VideoData> toModel(VideoData videoData) {

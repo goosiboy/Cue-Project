@@ -33,10 +33,15 @@ app.use((req, res, next) => {
 */
 
 app.get("/api/videos", function (req, res) {
-  backendClient.getVideos().then((_res) => {
-    res.send(_res);
-    console.log("was sent");
-  });
+  backendClient
+    .getVideos()
+    .then((_res) => {
+      res.send(JSON.stringify(_res));
+      console.log("/api/videos RESPONSE: " + JSON.stringify(_res));
+    })
+    .catch((err) => {
+      console.log("Error occured: " + err);
+    });
 });
 
 app.get(
@@ -44,6 +49,8 @@ app.get(
   checkSchema(SecurityTools.validationSchemas[0]),
   function (req, res) {
     let id = req.params.id;
+
+    console.log("req.params.id: " + id);
 
     const result = validationResult(req).formatWith(errorFormatter);
     if (!result.isEmpty()) {
@@ -53,9 +60,15 @@ app.get(
       });
     }
 
-    console.log("req.params.id: " + id);
-    let response = backendClient.getVideo(id);
-    res.send(response);
+    backendClient
+      .getVideo(id)
+      .then((_res) => {
+        res.send(JSON.stringify(_res));
+        console.log("/api/videos/:id RESPONSE: " + JSON.stringify(_res));
+      })
+      .catch((err) => {
+        console.log("Error occured: " + err);
+      });
   }
 );
 

@@ -13,36 +13,17 @@ module.exports = {
         Consts.GET
       )
     );
-    /*
-    let req = http
-      .request(
-        HttpUtils.httpOptions(
-          Consts.HOST,
-          RouteBuilder.VIDEOS_URL(),
-          Consts.BACKEND_API_PORT,
-          Consts.GET
-        ),
-        HttpUtils.httpCallback
-      )
-      .end();
-      */
   },
 
-  getVideo: function (id) {
-    /*
-    let req = http
-      .request(
-        HttpUtils.httpOptions(
-          Consts.HOST,
-          RouteBuilder.VIDEOS_URL(id),
-          Consts.BACKEND_API_PORT,
-          Consts.GET
-        ),
-        HttpUtils.httpCallback
+  getVideo: async function (id) {
+    return await httpRequest(
+      HttpUtils.httpOptions(
+        Consts.HOST,
+        RouteBuilder.VIDEOS_URL(id),
+        Consts.BACKEND_API_PORT,
+        Consts.GET
       )
-      .end();
-    return req;
-    */
+    );
   },
 
   getComments: function () {},

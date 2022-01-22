@@ -11,28 +11,6 @@ module.exports = {
         method: _method,
       };
     },
-
-    httpCallback: function (response) {
-      let body = "";
-
-      response.setEncoding("utf8");
-
-      response.on("data", function (chunk) {
-        body += chunk;
-      });
-
-      response.on("end", function () {
-        console.log("Middleware ended the call to backend:");
-        console.log(body);
-        console.log("--------------------------");
-      });
-
-      response.on("error", function (er) {
-        console.log("Middleware ended the call to backend:");
-        console.log(er);
-        console.log("--------------------------");
-      });
-    },
   },
 
   /**

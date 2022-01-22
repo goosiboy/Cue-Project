@@ -8,13 +8,10 @@ let http = require("http");
 module.exports = function HttpRequest(params, postData) {
   return new Promise(function (resolve, reject) {
     let req = http.request(params, function (res) {
-      console.log("1");
       // on bad status, reject
       if (res.statusCode < 200 || res.statusCode >= 300) {
         return reject(new Error("statusCode = " + res.statusCode));
       }
-
-      console.log("2");
 
       let body = [];
       // on response data, cumulate it
@@ -29,7 +26,6 @@ module.exports = function HttpRequest(params, postData) {
         } catch (e) {
           reject(e);
         }
-        console.log("3 : " + JSON.stringify(body));
         resolve(body);
       });
     });
@@ -39,7 +35,6 @@ module.exports = function HttpRequest(params, postData) {
     if (postData) {
       req.write(postData);
     }
-    console.log("4 : ended");
     req.end();
   });
 };
