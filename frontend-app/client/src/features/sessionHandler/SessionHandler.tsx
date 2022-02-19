@@ -14,9 +14,9 @@ export default class SessionHandler {
      * @param name Name of the key
      * @param value Value
      */
-    public static setToLocalStorage(name : string, value : any) {
-        let valueStr : any = value;
-        if(typeof value !== 'string') {
+    public static setToLocalStorage(name: string, value: any) {
+        let valueStr: any = value;
+        if (typeof value !== 'string') {
             valueStr = JSON.stringify(value);
         }
         window.localStorage.setItem(name, valueStr);
@@ -28,10 +28,10 @@ export default class SessionHandler {
      * @param name Name of the object, which will be parsed and returned
      * @returns A parsed object of any type, if one is found from localStorage. Otherwise returns an empty object
      */
-    public static getFromLocalStorage(name : string) : any {
-        let localStorageValue : any = window.localStorage.getItem(name);
+    public static getFromLocalStorage(name: string): any {
+        let localStorageValue: any = window.localStorage.getItem(name);
 
-        if(Utils.notEmpty(localStorageValue)) {
+        if (Utils.notEmpty(localStorageValue)) {
             return JSON.parse(localStorageValue);
         } else {
             return {};
@@ -44,9 +44,9 @@ export default class SessionHandler {
      * @param name Cookie name
      * @param val Cookie value
      */
-    public static setCookie(name : string, val: any) {
-        const date : Date = new Date();
-        const value : string = val;
+    public static setCookie(name: string, val: any) {
+        const date: Date = new Date();
+        const value: string = val;
 
         // Expires in 7 days
         date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
@@ -59,14 +59,14 @@ export default class SessionHandler {
      * @param name Cookie name
      * @returns Cookie string
      */
-    public static getCookie(name : string) : string {        
-        const cookieString : string = Utils.clone(Utils.sanitize(document.cookie));
-        
-        let stringArray : string[] = cookieString.split(";");
+    public static getCookie(name: string): string {
+        const cookieString: string = Utils.clone(Utils.sanitize(document.cookie));
+
+        let stringArray: string[] = cookieString.split(";");
         let returnString = "";
 
         stringArray.forEach(value => {
-            if(value.match(name)) {
+            if (value.match(name)) {
                 returnString = value;
             }
         });
@@ -79,11 +79,11 @@ export default class SessionHandler {
      * 
      * @param name Name of the cookie, which will be deleted
      */
-     public static deleteCookie(name : string) {
-        const date : Date = new Date();
+    public static deleteCookie(name: string) {
+        const date: Date = new Date();
 
         // Set the date to expire in -1 days
-        date.setTime(date.getTime() + (-1 * 24 * 60 * 60 * 1000));   
+        date.setTime(date.getTime() + (-1 * 24 * 60 * 60 * 1000));
         document.cookie = this.secureCookieBuilder(name, "", date);
     }
 
@@ -91,11 +91,11 @@ export default class SessionHandler {
      * Tries to delete all cookies from the browser cache
      */
     public static clearCookies() {
-        const cookieString : string = Utils.clone(Utils.sanitize(document.cookie));      
-        let stringArray : string[] = cookieString.split(";");
-        
+        const cookieString: string = Utils.clone(Utils.sanitize(document.cookie));
+        let stringArray: string[] = cookieString.split(";");
+
         stringArray.forEach(value => {
-            let cookieName = value.substr(0, value.indexOf('=')).replaceAll(' ',''); 
+            let cookieName = value.substr(0, value.indexOf('=')).replaceAll(' ', '');
             Cookies.remove(cookieName);
         });
     }
@@ -108,10 +108,10 @@ export default class SessionHandler {
      * @param date Expiration date
      * @returns A string, that contains the required configurations for a secure cookie
      */
-    private static secureCookieBuilder(name : string, value: string, date : Date) : string {       
+    private static secureCookieBuilder(name: string, value: string, date: Date): string {
         return (
-            name+"="+value+"; "+
-            "expires="+date.toUTCString()+"; samesite=strict; path=/");
+            name + "=" + value + "; " +
+            "expires=" + date.toUTCString() + "; samesite=strict; path=/");
     }
 
 }

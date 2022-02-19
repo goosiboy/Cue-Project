@@ -7,19 +7,34 @@ export default class Client {
         console.log("client initialized");
     }
 
-    public async fetchVideos() : Promise<Response>  {
+    public async fetchVideos(): Promise<Response> {
         const response: AxiosResponse<any, any> = await axios.get('http://localhost:5000/api/videos');
-        return response.data; 
-    } 
- 
-    public async fetchVideo(id: string) : Promise<any> {
-        if(Utils.notEmpty(id)) {
+        return response.data;
+    }
+
+    public async fetchVideo(id: string): Promise<any> {
+        if (Utils.notEmpty(id)) {
             let untrusted_URL: string = "";
             let sanitized_URL: string = untrusted_URL.concat("http://localhost:5000/api/videos", "/", Utils.sanitize(id));
             const response: AxiosResponse<any, any> = await axios.get(sanitized_URL);
-            return response.data; 
+            return response.data;
         }
         return Promise.resolve();
-    } 
+    }
+
+    public async fetchComments(): Promise<Response> {
+        const response: AxiosResponse<any, any> = await axios.get('http://localhost:5000/api/comments');
+        return response.data;
+    }
+
+    public async fetchComment(id: string): Promise<any> {
+        if (Utils.notEmpty(id)) {
+            let untrusted_URL: string = "";
+            let sanitized_URL: string = untrusted_URL.concat("http://localhost:5000/api/comments", "/", Utils.sanitize(id));
+            const response: AxiosResponse<any, any> = await axios.get(sanitized_URL);
+            return response.data;
+        }
+        return Promise.resolve();
+    }
 
 }

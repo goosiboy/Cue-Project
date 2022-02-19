@@ -26,7 +26,25 @@ module.exports = {
     );
   },
 
-  getComments: function () {},
+  getComments: async function () {
+    return await httpRequest(
+      HttpUtils.httpOptions(
+        Consts.HOST,
+        RouteBuilder.COMMENTS_URL(),
+        Consts.BACKEND_API_PORT,
+        Consts.GET
+      )
+    );
+  },
 
-  getComments: function (id) {},
+  getComments: async function (id) {
+    return await httpRequest(
+      HttpUtils.httpOptions(
+        Consts.HOST,
+        RouteBuilder.COMMENTS_URL(id),
+        Consts.BACKEND_API_PORT,
+        Consts.GET
+      )
+    )
+  }
 };

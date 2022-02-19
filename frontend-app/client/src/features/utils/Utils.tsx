@@ -4,8 +4,11 @@
  * @author jonydev
  */
 export default class Utils {
-    
-    private static sanitizationMap : any = {
+
+    /**
+     * Lightweight sanitization map for general user input feedback
+     */
+    private static sanitizationMap: any = {
         '&': '&amp;',
         '<': '&lt;',
         '>': '&gt;',
@@ -21,7 +24,7 @@ export default class Utils {
      * @param val Value that will be checked
      * @returns TRUE if not empty
      */
-    public static notEmpty(val : any) : boolean {
+    public static notEmpty(val: any): boolean {
         return !Utils.isEmpty(val);
     }
 
@@ -31,9 +34,9 @@ export default class Utils {
      * @param val Value that will be checked
      * @returns TRUE if empty
      */
-    public static isEmpty(val : any) : boolean {
-        return (!val || val.length === 0 );
-    }   
+    public static isEmpty(val: any): boolean {
+        return (!val || val.length === 0);
+    }
 
     /**
      * Sanitizes the given string value
@@ -41,28 +44,28 @@ export default class Utils {
      * @param string String that will be sanitized
      * @returns A sanitized string
      */
-    public static sanitize(value : string) : string {
+    public static sanitize(value: string): string {
         const reg = /[&<>"'/]/ig;
 
-        if(Utils.notEmpty(value)) {
-            return value.replace(reg, (match)=>(Utils.sanitizationMap[match])).trim();
+        if (Utils.notEmpty(value)) {
+            return value.replace(reg, (match) => (Utils.sanitizationMap[match])).trim();
         } else {
             return "";
         }
     }
 
-   /**
-     * Sanitizes the given string value with given map
-     * 
-     * @param string String that will be sanitized
-     * @param sanitizationMap Map that contains the characters, which will be sanitized
-     * @returns A sanitized string
-     */
-    public static sanitizeWithMap(value : string, sanitizationMap : any) : string {
+    /**
+      * Sanitizes the given string value with given map
+      * 
+      * @param string String that will be sanitized
+      * @param sanitizationMap Map that contains the characters, which will be sanitized
+      * @returns A sanitized string
+      */
+    public static sanitizeWithMap(value: string, sanitizationMap: any): string {
         const reg = /[&<>"'/]/ig;
 
-        if(Utils.notEmpty(value)) {
-            return value.replace(reg, (match)=>(sanitizationMap[match])).trim();
+        if (Utils.notEmpty(value)) {
+            return value.replace(reg, (match) => (sanitizationMap[match])).trim();
         } else {
             return "";
         }
@@ -74,7 +77,7 @@ export default class Utils {
      * @param object Object that will be cloned
      * @returns A clone of the provided object
      */
-    public static clone(object : any) : string {
+    public static clone(object: any): string {
         return JSON.parse(JSON.stringify(object));
     }
 

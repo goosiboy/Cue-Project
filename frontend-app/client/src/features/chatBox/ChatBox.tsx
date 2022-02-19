@@ -1,28 +1,43 @@
 import { Component } from "react";
-import SessionHandler from "../sessionHandler/SessionHandler";
-import zIndexManager from "../utils/ZindexManager";
+import Client from "../../api/client";
+import "./ChatBox.css";
 
-class ChatBox extends Component {
+type ChatBoxState = {
+    queue: string,
+    id: string
+}
 
-    style = {
-        border: "1px solid black",
-        zIndex: zIndexManager.getLayer("LAYER_0")
+class ChatBox extends Component<any, ChatBoxState> {
+
+    private client = new Client();
+
+    constructor(props: any) {
+        super(props);
+
+        this.state = {
+            queue: "Placeholder value",
+            id: ""
+        };
+
+        this.getComments = this.getComments.bind(this);
+
     }
 
-    storeCurrentStyle() {
-        SessionHandler.setToLocalStorage("styles", this.style);
-    }
-
-    fetchStyle() {
-        SessionHandler.getFromLocalStorage("styles");
+    private getComments() {
+        let axiosResponse = this.client.fetchComments();
+        axiosResponse.then((res) => {
+            let result: string = JSON.stringify(res);
+            this.setState({ queue: result });
+        });
     }
 
     render() {
         return (
-            <div className="chatBox" style={this.style}>
-                ChatBoxi
-                { this.storeCurrentStyle() }
-                { this.fetchStyle() }
+            <div className="chatBox">
+
+                {this.getComments()}
+                {this.state.queue}
+
             </div>
         );
     }

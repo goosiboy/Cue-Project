@@ -22,9 +22,6 @@ module.exports = {
         // If omitted, all request locations will be checked
         in: ["params"],
         errorMessage: Messages.INVALID_INPUT_ERROR("ID"),
-        isLength: {
-          options: { min: 1 },
-        },
         isInt: true,
         // Sanitizers can go here as well
         toInt: true,
