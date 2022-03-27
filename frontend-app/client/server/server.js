@@ -5,13 +5,16 @@ const path = require("path");
 const helmet = require("helmet");
 const { checkSchema, validationResult } = require("express-validator");
 const session = require('express-session');
+const bodyParser = require("body-parser");
+const State = require("./src/state/State");
 
-const backendClient = require("./src/backendClient/BackendClient");
 const SecurityTools = require("./src/utils/SecurityTools");
 const Messages = require("./src/utils/Consts").MESSAGES;
 
 const app = express();
 const port = 5000;
+
+const state = new State();
 
 /**
  * Error message - formatter
@@ -28,11 +31,9 @@ const errorFormatter = ({ location, msg, param, value, nestedErrors }) => {
 /* ----------- */
 app.use(helmet());
 
-// console.log("env: " + process.env.SESSION_COOKIE_SECRET);
-
 // TODO: replace with generated secret
 app.use(session({
-  secret: "",
+  secret: "example",
   name: "cookieSessionId",
   resave: true,
   saveUninitialized: true,
@@ -57,22 +58,30 @@ app.disable('x-powered-by');
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 
-/*
-app.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, "..", "build", "index.html"));
-});
-*/
+/* BodyParser configurations */
+app.use(bodyParser.json({ limit: '200kb' }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
+/* --------- */
+/*    POST   */
+/* --------- */
+app.post("/api/post/comment", (request, response) => {
+  console.log("/api/post/comment: " + request.query.JSON);
+  //state.storeComment();
+});
+
+app.post("/api/post/video", (request, response) => {
+  console.log("/api/post/video: " + request.query.JSON);
+  //state.storeComment();
+});
+
+
+/* --------- */
+/*    GET    */
+/* --------- */
 app.get("/api/videos", function (req, res) {
-  backendClient
-    .getVideos()
-    .then((_res) => {
-      res.send(JSON.stringify(_res));
-      console.log("/api/videos RESPONSE: " + JSON.stringify(_res));
-    })
-    .catch((err) => {
-      console.log("Error occured: " + err);
-    });
+  res.send(JSON.stringify(state.getVideos()));
 });
 
 app.get(
@@ -89,28 +98,12 @@ app.get(
       });
     }
 
-    backendClient
-      .getVideo(id)
-      .then((_res) => {
-        res.send(JSON.stringify(_res));
-        console.log("/api/videos/:id RESPONSE: " + JSON.stringify(_res));
-      })
-      .catch((err) => {
-        console.log("Error occured: " + err);
-      });
+    res.send(state.getVideos(id));
   }
 );
 
 app.get("/api/comments", function (req, res) {
-  backendClient
-    .getComments()
-    .then((_res) => {
-      res.send(JSON.stringify(_res));
-      console.log("/api/comments/ RESPONSE: " + JSON.stringify(_res));
-    })
-    .catch((err) => {
-      console.log("Error occured: " + err);
-    });
+  res.send(JSON.stringify(state.getComments()));
 });
 
 app.get(
@@ -127,17 +120,11 @@ app.get(
       });
     }
 
-    backendClient
-      .getComments(id)
-      .then((_res) => {
-        res.send(JSON.stringify(_res));
-        console.log("/api/comments/:id RESPONSE: " + JSON.stringify(_res));
-      })
-      .catch((err) => {
-        console.log("Error occured: " + err);
-      });
+    res.send(state.getComments(id));
   }
 );
+
+
 
 app.listen(port, () => {
   console.log(`Application is running on port ${port}`);

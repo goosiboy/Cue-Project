@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { io } from "socket.io-client";
 import Utils from "../features/utils/Utils";
 
 export default class Client {
@@ -35,6 +36,11 @@ export default class Client {
             return response.data;
         }
         return Promise.resolve();
+    }
+
+    public async storeComment(): Promise<Response> {
+        const response: AxiosResponse<any, any> = await axios.post('http://localhost:5000/api/comments');
+        return response.data;
     }
 
 }

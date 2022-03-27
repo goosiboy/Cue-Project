@@ -28,16 +28,20 @@ public class H2Preloader {
 
 	@Bean
 	public CommandLineRunner initVideoDataDB(VideoDataRepository repository) {
-		return args -> log.info(PRELOADING, repository.save(new VideoData("I'm Alive",
-				"https://www.youtube.com/watch?v=tbAK2Rz_tzE", VideoLifeCycle.WAITING, new Date())));
+		return args -> log.info(PRELOADING,
+				repository.save(new VideoData("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb2d", "I'm Alive",
+						"https://www.youtube.com/watch?v=tbAK2Rz_tzE", VideoLifeCycle.WAITING, new Date())));
 	}
 
 	@Bean
 	public CommandLineRunner initCommentDB(CommentDataRepository repository) {
 		return args -> {
-			log.info(PRELOADING, repository.save(new CommentData("AngryBanana", "Nice video bro!", new Date())));
-			log.info(PRELOADING, repository.save(new CommentData("SadKiwi", "LMAO", new Date())));
-			log.info(PRELOADING, repository.save(new CommentData("PretentiousApple", "What is this", new Date())));
+			log.info(PRELOADING, repository.save(new CommentData("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb3d", "AngryBanana",
+					"Nice video brooo!!!!", new Date())));
+			log.info(PRELOADING, repository
+					.save(new CommentData("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb4d", "SadKiwi", "LMAO!!!", new Date())));
+			log.info(PRELOADING, repository.save(new CommentData("9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb5d",
+					"PretentiousApple", "What is this!!!", new Date())));
 		};
 	}
 

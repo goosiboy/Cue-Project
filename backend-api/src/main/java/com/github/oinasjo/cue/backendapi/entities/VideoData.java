@@ -21,6 +21,8 @@ public class VideoData {
 	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 
+	private String uuid;
+
 	private String videoTitle;
 
 	@Column(length = 600)
@@ -35,7 +37,8 @@ public class VideoData {
 		// Empty constructor
 	}
 
-	public VideoData(String videoTitle, String url, VideoLifeCycle status, Date date) {
+	public VideoData(String uuid, String videoTitle, String url, VideoLifeCycle status, Date date) {
+		setUuid(uuid);
 		setVideoTitle(videoTitle);
 		setUrl(url);
 		setStatus(status);
@@ -48,6 +51,14 @@ public class VideoData {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 	public String getVideoTitle() {
@@ -90,7 +101,7 @@ public class VideoData {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, videoTitle, status, url);
+		return Objects.hash(id, uuid, videoTitle, status, url);
 	}
 
 	@Override
@@ -102,13 +113,15 @@ public class VideoData {
 		if (getClass() != obj.getClass())
 			return false;
 		VideoData other = (VideoData) obj;
-		return Objects.equals(id, other.id) && Objects.equals(videoTitle, other.videoTitle) && status == other.status
+		return Objects.equals(id, other.id) && Objects.equals(uuid, other.uuid)
+				&& Objects.equals(videoTitle, other.videoTitle) && status == other.status
 				&& Objects.equals(url, other.url);
 	}
 
 	@Override
 	public String toString() {
-		return "VideoData [id=" + id + ", videoTitle=" + videoTitle + ", url=" + url + ", status=" + status + "]";
+		return "VideoData [date=" + date + ", id=" + id + ", status=" + status + ", url=" + url + ", uuid=" + uuid
+				+ ", videoTitle=" + videoTitle + "]";
 	}
 
 }

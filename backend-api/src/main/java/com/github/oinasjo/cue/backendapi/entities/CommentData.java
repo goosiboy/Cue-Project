@@ -19,6 +19,8 @@ public class CommentData {
 	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 
+	private String uuid;
+
 	@Column(length = 60)
 	private String name;
 
@@ -32,7 +34,8 @@ public class CommentData {
 		// Empty constructor
 	}
 
-	public CommentData(String name, String comment, Date date) {
+	public CommentData(String uuid, String name, String comment, Date date) {
+		setUuid(uuid);
 		setName(name);
 		setComment(comment);
 		setDate(date);
@@ -50,6 +53,14 @@ public class CommentData {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 	/**
@@ -96,7 +107,14 @@ public class CommentData {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(comment, date, id, name);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((comment == null) ? 0 : comment.hashCode());
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((uuid == null) ? 0 : uuid.hashCode());
+		return result;
 	}
 
 	@Override
@@ -108,13 +126,38 @@ public class CommentData {
 		if (getClass() != obj.getClass())
 			return false;
 		CommentData other = (CommentData) obj;
-		return Objects.equals(comment, other.comment) && Objects.equals(date, other.date)
-				&& Objects.equals(id, other.id) && Objects.equals(name, other.name);
+		if (comment == null) {
+			if (other.comment != null)
+				return false;
+		} else if (!comment.equals(other.comment))
+			return false;
+		if (date == null) {
+			if (other.date != null)
+				return false;
+		} else if (!date.equals(other.date))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (uuid == null) {
+			if (other.uuid != null)
+				return false;
+		} else if (!uuid.equals(other.uuid))
+			return false;
+		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "CommentData [id=" + id + ", name=" + name + ", comment=" + comment + ", date=" + date + "]";
+		return "CommentData [comment=" + comment + ", date=" + date + ", id=" + id + ", name=" + name + ", uuid=" + uuid
+				+ "]";
 	}
 
 }
