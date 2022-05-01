@@ -6,8 +6,8 @@ ENV PORT 80
 
 COPY package.json /code/package.json
 
-RUN npm install
-
+RUN npm install --silent
+RUN npm install react-scripts@5.0.1 -g --silent
 COPY  . /code/
 
-CMD ["node", "node/server.js"]
+CMD ["npm", "start"]
