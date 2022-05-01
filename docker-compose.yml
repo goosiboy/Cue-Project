@@ -6,8 +6,8 @@ services:
     image: postgres:14.2-alpine
     restart: always
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -15,8 +15,11 @@ services:
 
   backend:
     build:
-      context: backend-api/
+      context: backend/
       dockerfile: Dockerfile
+    environment:
+      H2_USER: ${DB_USER}
+      H2_PASSWORD: ${DB_PASSWORD}
     container_name: backend
     ports:
       - "8082:80"
