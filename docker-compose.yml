@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+
+  db:
+    image: postgres:14.2-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: backend-api/
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "8082:80"
+    depends_on:
+      - db
+
+  middleware:
+    build:
+      context: middleware/server
+      dockerfile: Dockerfile
+    container_name: middleware
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+      - backend
+
+  frontend:
+    build:
+      context: frontend/
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - middleware
+
+volumes:
+  db:
+    driver: local
