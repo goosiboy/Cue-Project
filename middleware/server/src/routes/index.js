@@ -4,7 +4,7 @@ module.exports = function (config) {
     const router = new express.Router();
 
     router.get('/index', (req, res) => {
-        res.send("Index route is alive");
+        res.send(new Date().toISOString());
     });
 
     return router;

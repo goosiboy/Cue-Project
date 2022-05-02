@@ -1,45 +1,65 @@
 import { Component } from "react";
-import Client from "../../api/client";
 import "./ChatBox.css";
+import { io, Socket } from "socket.io-client";
+import Utils from "../utils/Utils";
 
-type ChatBoxState = {
-    queue: string,
-    id: string
+interface IMainProps { }
+
+interface IMainState {
+    response: any,
+    isChatOpen: boolean
 }
 
-class ChatBox extends Component<any, ChatBoxState> {
+class ChatBox extends Component<IMainProps, IMainState> {
 
-    private client = new Client();
+    private ENDPOINT: string = "http://127.0.0.1:8081";
+    private socket: Socket = io(this.ENDPOINT);
 
-    constructor(props: any) {
+    constructor(props: IMainProps) {
         super(props);
 
         this.state = {
-            queue: "Placeholder value",
-            id: ""
+            response: "",
+            isChatOpen: false
         };
-
-        this.getComments = this.getComments.bind(this);
-
     }
 
-    private getComments() {
-        /*
-        let axiosResponse = this.client.fetchComments();
-        axiosResponse.then((res) => {
-            let result: string = JSON.stringify(res);
-            this.setState({ queue: result });
-        });
-        */
+    turnSocketOn() {
+        if (Utils.notEmpty(this.ENDPOINT)) {
+            console.log("Socket was established");
+            this.socket.on("FromAPI", data => {
+                this.setState({ ...this.state, response: data });
+            });
+        } else {
+            console.log("Socket was not established because endpoint was null");
+        }
+    }
+
+    turnSocketOff() {
+        this.socket.disconnect();
+        console.log("Socket was disconnected");
+    }
+
+    private toggleChat() {
+        if (this.state.isChatOpen === undefined || !this.state.isChatOpen) {
+            this.turnSocketOn();
+            this.setState({ isChatOpen: true });
+        } else {
+            this.turnSocketOff();
+            this.setState({ isChatOpen: false });
+        }
     }
 
     render() {
         return (
             <div className="chatBox">
+                <button onClick={this.toggleChat}>
+                    Toggle chat!
+                </button>
 
-                {this.getComments()}
-                {this.state.queue}
-
+                <div style={{ display: this.state.isChatOpen ? 'block' : 'none' }} >
+                    Response: {this.state.response}
+                </div>
             </div>
         );
     }
