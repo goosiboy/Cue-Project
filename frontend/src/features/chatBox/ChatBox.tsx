@@ -24,11 +24,13 @@ class ChatBox extends Component<any, ChatBoxState> {
     }
 
     private getComments() {
+        /*
         let axiosResponse = this.client.fetchComments();
         axiosResponse.then((res) => {
             let result: string = JSON.stringify(res);
             this.setState({ queue: result });
         });
+        */
     }
 
     render() {

@@ -28,19 +28,23 @@ class MediaQueue extends Component<any, MediaQueuestate> {
     }
 
     private getVideos() {
+        /*
         let axiosResponse = this.client.fetchVideos();
         axiosResponse.then((res) => {
             let result: string = JSON.stringify(res);
             this.setState({ queue: result });
         });
+        */
     }
 
     private getVideo(id: string) {
+        /*
         let axiosResponse = this.client.fetchVideo(id);
         axiosResponse.then((res) => {
             let result: string = JSON.stringify(res);
             this.setState({ queue: result });
         });
+        */
     }
 
     private sendDataToParent = (index: string) => {

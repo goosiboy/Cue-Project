@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { io } from "socket.io-client";
 import Utils from "../features/utils/Utils";
 
 export default class Client {
@@ -7,7 +6,7 @@ export default class Client {
     constructor() {
         console.log("client initialized");
     }
-
+    /*
     public async fetchVideos(): Promise<Response> {
         const response: AxiosResponse<any, any> = await axios.get('http://localhost:5000/api/videos');
         return response.data;
@@ -42,5 +41,6 @@ export default class Client {
         const response: AxiosResponse<any, any> = await axios.post('http://localhost:5000/api/comments');
         return response.data;
     }
+    */
 
 }

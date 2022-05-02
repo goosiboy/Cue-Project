@@ -1,13 +1,13 @@
 version: "3.9"
 
 services:
-
   db:
     image: postgres:14.2-alpine
     restart: always
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+    container_name: database
     ports:
       - "5432:5432"
     volumes:
@@ -33,9 +33,6 @@ services:
     container_name: middleware
     ports:
       - "8081:80"
-    depends_on:
-      - db
-      - backend
 
   frontend:
     build:
@@ -44,8 +41,6 @@ services:
     container_name: frontend
     ports:
       - "8080:80"
-    depends_on:
-      - middleware
 
 volumes:
   db:
