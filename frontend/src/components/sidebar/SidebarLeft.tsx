@@ -4,7 +4,6 @@ import './SidebarLeft.css';
 class SidebarLeft extends Component {
 
     style = {
-        border: "1px solid black",
         zIndex: 0
     }
 

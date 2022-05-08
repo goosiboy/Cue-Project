@@ -1,7 +1,5 @@
 import { Component } from "react";
 import Client from "../../api/client";
-import ChatBox from "../chatBox/ChatBox";
-import YoutubeEmbed from "../youtubeEmbed/YoutubeEmbed";
 import "./MediaQueue.css";
 
 type MediaQueuestate = {
@@ -58,8 +56,6 @@ class MediaQueue extends Component<any, MediaQueuestate> {
     render() {
         return (
             <div className="MediaQueue">
-                <YoutubeEmbed embedId={"3rWA1r2c3QY"} />
-                <ChatBox />
             </div>
         );
     }

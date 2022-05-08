@@ -5,7 +5,6 @@ import ChatBox from "../../features/chatBox/ChatBox";
 class SidebarRight extends Component {
 
     style = {
-        border: "1px solid black",
         zIndex: 0
     }
 

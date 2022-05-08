@@ -3,9 +3,8 @@
     grid-area: SidebarRight;
     grid-column-start: auto;
     grid-column-end: auto;
-} 
+}
 
 .SidebarRight {
-    background-color: rgb(242, 255, 185);
     height: 100%;
 }
