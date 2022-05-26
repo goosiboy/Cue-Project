@@ -1,9 +1,11 @@
 import { Component } from "react";
 import "./ChatBox.css";
-import { io, Socket } from "socket.io-client";
 import Utils from "../utils/Utils";
+import { Socket } from "socket.io-client";
 
-interface IMainProps { }
+interface IMainProps {
+    socket: Socket
+}
 
 interface IMainState {
     response: any,
@@ -13,9 +15,6 @@ interface IMainState {
 }
 
 class ChatBox extends Component<IMainProps, IMainState> {
-
-    private ENDPOINT: string = "http://127.0.0.1:8081";
-    private socket: Socket = io(this.ENDPOINT);
 
     constructor(props: IMainProps) {
         super(props);
@@ -35,18 +34,14 @@ class ChatBox extends Component<IMainProps, IMainState> {
     }
 
     private turnSocketOn() {
-        if (Utils.notEmpty(this.ENDPOINT)) {
-            console.log("Socket was established");
-            this.socket.on("messageFromServer", data => {
-                this.setState({ ...this.state, response: data.message });
-            });
-        } else {
-            console.log("Socket was not established because endpoint was null");
-        }
+        console.log("Socket was established");
+        this.props.socket.on("messagesFromServer", data => {
+            this.setState({ ...this.state, response: data.message });
+        });
     }
 
     private turnSocketOff() {
-        this.socket.disconnect();
+        this.props.socket.disconnect();
         console.log("Socket was disconnected");
     }
 
@@ -62,7 +57,7 @@ class ChatBox extends Component<IMainProps, IMainState> {
 
     private sendMessage(event: any) {
         if (Utils.notEmpty(this.state.userMessage)) {
-            this.socket.emit(
+            this.props.socket.emit(
                 "messageFromClient",
                 {
                     message: this.state.userMessage,

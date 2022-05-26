@@ -6,6 +6,8 @@ const session = require('express-session');
 const bodyParser = require("body-parser");
 const port = process.env.PORT || 4001;
 const index = require("./src/routes/index");
+const State = require("./src/state/State");
+const applicationState = new State();
 
 const app = express();
 
@@ -60,9 +62,14 @@ io.on("connection", (socket) => {
     }
     interval = setInterval(() => getApiAndEmit(socket), 1000);
 
-    socket.on("messageFromClient", function (data) {
+    socket.on("messageFromClient", () => {
         console.log("messageFromClient: " + data.user + " | message : " + data.message);
-        io.sockets.emit("messageFromServer", data);
+        io.sockets.emit("messagesFromServer", applicationState.getComments());
+    });
+
+    socket.on("addVideoId", () => {
+        console.log("client sent a new video id: " + data);
+        io.sockets.emit("videoIdsFromServer", applicationState.getVideos());
     });
 
     socket.on("disconnect", () => {
