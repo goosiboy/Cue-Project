@@ -2,15 +2,14 @@ import { Component } from "react";
 import { Socket } from "socket.io-client";
 import Client from "../../api/client";
 import "./MediaQueue.css";
+import Video from "../video/Video";
 
 interface IMediaQueueProps {
     socket: Socket
 }
 
 interface IMediaQueueState {
-    queue: string,
-    id: string,
-    videos: string[]
+    videos: Video[]
 }
 
 class MediaQueue extends Component<IMediaQueueProps, IMediaQueueState> {
@@ -22,24 +21,24 @@ class MediaQueue extends Component<IMediaQueueProps, IMediaQueueState> {
         super(props);
 
         this.state = {
-            queue: "Placeholder value",
-            id: "",
-            videos: [""]
+            videos: [new Video("placeHolder", "placeHolder", "placeHolder", "placeHolder")]
         };
         this.loadMediaQueue();
     }
 
     private loadMediaQueue() {
-        console.log("Loaded the media queue");
         this.props.socket.on("videoIdsFromServer", data => {
             this.setState({ ...this.state, videos: data });
         });
+        console.log("Loaded the media queue");
     }
 
     render() {
         return (
             <div className="MediaQueue">
-                <ul></ul>
+
+                {this.state.videos.toString()}
+
             </div>
         );
     }

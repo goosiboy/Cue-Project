@@ -34,10 +34,10 @@ class ChatBox extends Component<IMainProps, IMainState> {
     }
 
     private turnSocketOn() {
-        console.log("Socket was established");
         this.props.socket.on("messagesFromServer", data => {
             this.setState({ ...this.state, response: data.message });
         });
+        console.log("Socket was established");
     }
 
     private turnSocketOff() {
